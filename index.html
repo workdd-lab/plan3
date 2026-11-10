@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>خطة التغذية الأسبوعية</title>
+  <meta name="description" content="خطة تغذية أسبوعية بثلاثة قوالب: السعرات والبروتين والكربوهيدرات والدهون، مع الوجبات من السبت إلى الجمعة.">
+  <meta name="theme-color" content="#16325F">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Changa:wght@600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add("js");</script>
+  <style>
+    :root {
+      --a: #16325f;
+      --b: #6f2c22;
+      --c: #145c38;
+      --honey: #e6b325;
+      --ink: #172033;
+      --tile: #e7ebf1;
+      --paper: #f8f9fb;
+      --line: #d3dae4;
+      --soft: #3e4c63;
+      --on-blue: #e7eef9;
+      --on-blue-dim: #d6e3f6;
+      --display: "Changa", "Segoe UI", Tahoma, sans-serif;
+      --text: "Readex Pro", "Segoe UI", Tahoma, sans-serif;
+      --tone: var(--a);
+      color-scheme: light;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scrollbar-color: var(--a) var(--tile); }
+
+    body {
+      margin: 0;
+      font-family: var(--text);
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--tile);
+    }
+
+    ::selection { background: var(--honey); color: var(--ink); }
+
+    :focus-visible {
+      outline: 2px solid var(--a);
+      outline-offset: 3px;
+    }
+
+    .skip {
+      position: absolute;
+      inset-inline-start: 1rem;
+      top: -4rem;
+      z-index: 2;
+      background: var(--honey);
+      color: var(--ink);
+      padding: 0.45rem 0.7rem;
+      font-weight: 700;
+    }
+
+    .skip:focus { top: 1rem; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+
+    h1, h2, h3, .bigcode, .ration dd, .code {
+      font-family: var(--display);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    h1 {
+      margin: 0 0 0.55rem;
+      font-size: clamp(2.15rem, 4.4vw, 3.35rem);
+      font-weight: 800;
+      line-height: 1.15;
+      text-wrap: balance;
+    }
+
+    .top { background: var(--a); color: #fff; }
+
+    .identity { padding: 1.7rem 0 1.4rem; }
+
+    .lede {
+      margin: 0;
+      max-width: 38rem;
+      color: var(--on-blue);
+    }
+
+    .identity h2,
+    .targets h2 {
+      margin: 1.4rem 0 0.65rem;
+      font-size: 1.28rem;
+    }
+
+    .targets h2 { margin: 0 0 0.55rem; }
+
+    .player {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1.4rem;
+      margin: 0;
+    }
+
+    .player div { display: flex; gap: 0.4rem; align-items: baseline; }
+
+    .player dt { color: var(--on-blue-dim); font-weight: 500; }
+
+    .player dd { margin: 0; font-weight: 700; }
+
+    .targets {
+      background: var(--honey);
+      color: var(--ink);
+      padding: 1.1rem 1rem 1.2rem;
+    }
+
+    .targets .wrap { width: min(1120px, 100%); }
+
+    .ration { margin: 0; }
+
+    .ration div {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.48rem 0;
+      border-top: 1px solid rgba(23, 32, 51, 0.22);
+    }
+
+    .ration dt { font-weight: 600; }
+
+    .ration dd {
+      margin: 0;
+      font-size: 1.35rem;
+      text-align: end;
+    }
+
+    .ration dd span,
+    .num {
+      font-family: var(--text);
+      font-weight: 600;
+    }
+
+    .ration dd .num {
+      font-family: var(--display);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .ration dd span:not(.num) { font-size: 0.82rem; }
+
+    .num {
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .board { margin-top: 1.8rem; }
+
+    .board h2,
+    .rail h2 {
+      margin: 0 0 0.7rem;
+      font-size: 1.45rem;
+    }
+
+    .week {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(8.6rem, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .week a {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.15rem;
+      min-height: 4.8rem;
+      padding: 0.7rem 0.75rem 0.6rem;
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .week .dow { font-weight: 600; }
+
+    .week .code { font-size: 1.65rem; font-weight: 800; line-height: 1; }
+
+    .week a[data-template="a"] .code { color: var(--a); }
+    .week a[data-template="b"] .code { color: var(--b); }
+    .week a[data-template="c"] .code { color: var(--c); }
+
+    .week a[data-template="a"]:hover:not(.is-on) { background: #e4eaf4; }
+    .week a[data-template="b"]:hover:not(.is-on) { background: #f8e8e4; }
+    .week a[data-template="c"]:hover:not(.is-on) { background: #e3f2ea; }
+
+    .week a.is-on { color: #fff; }
+    .week a[data-template="a"].is-on { background: var(--a); }
+    .week a[data-template="b"].is-on { background: var(--b); }
+    .week a[data-template="c"].is-on { background: var(--c); }
+    .week a.is-on .code { color: #fff; }
+
+    .today-flag {
+      background: var(--honey);
+      color: var(--ink);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.08rem 0.4rem;
+    }
+
+    .week a.is-on .today-flag {
+      background: transparent;
+      color: #fff;
+      padding-inline: 0;
+    }
+
+    .week a:focus-visible { outline-offset: -3px; }
+    .week a.is-on:focus-visible { outline-color: #fff; }
+
+    .habits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem 1.15rem;
+      list-style: none;
+      margin: 0.85rem 0 0;
+      padding: 0;
+      color: var(--soft);
+    }
+
+    .habits a {
+      color: var(--a);
+      font-weight: 700;
+      text-underline-offset: 0.18em;
+    }
+
+    .content {
+      margin: 1.4rem auto 3.2rem;
+    }
+
+    .sheet {
+      background: var(--paper);
+      border-top: 8px solid var(--tone);
+      padding: 1.2rem 1.25rem 1.6rem;
+      box-shadow: 0 18px 40px -24px rgba(22, 50, 95, 0.7);
+      scroll-margin-top: 0.75rem;
+    }
+
+    .weigh {
+      margin: 0 0 1rem;
+      padding: 0;
+      list-style: none;
+      color: var(--soft);
+    }
+
+    .weigh li + li { margin-top: 0.15rem; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 0.65rem;
+      margin: 0 0 0.4rem;
+    }
+
+    .progress {
+      margin: 0;
+      margin-inline-end: auto;
+      font-weight: 700;
+    }
+
+    .toolbar button {
+      font: inherit;
+      font-weight: 600;
+      color: var(--ink);
+      background: transparent;
+      border: 1px solid var(--line);
+      padding: 0.45rem 0.7rem;
+      cursor: pointer;
+    }
+
+    .toolbar button:hover { background: var(--tile); }
+
+    .scope {
+      margin: 0 0 1rem;
+      color: var(--soft);
+    }
+
+    .dayhead {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.9rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .dayhead > div { min-width: 0; }
+
+    .bigcode {
+      margin: 0;
+      font-size: clamp(4.25rem, 10vw, 5.5rem);
+      font-weight: 800;
+      line-height: 0.75;
+      color: var(--tone);
+    }
+
+    .day h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+    }
+
+    .when { margin: 0.3rem 0 0; color: var(--soft); }
+
+    .meal { padding: 1.2rem 0 0.35rem; }
+    .meal + .meal { border-top: 1px solid var(--line); }
+    .meal.is-snack { padding-top: 0.85rem; }
+
+    .meal h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.55rem;
+    }
+
+    .meal:not(.is-snack) h3 { color: var(--tone); }
+    .meal.is-snack h3 { font-size: 1.22rem; }
+
+    .meal ul { list-style: none; margin: 0; padding: 0; }
+
+    .item label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      min-height: 44px;
+      margin-inline: -0.35rem;
+      padding: 0.4rem 0.35rem;
+      cursor: pointer;
+    }
+
+    .item label:hover { background: var(--tile); }
+
+    .item input {
+      appearance: none;
+      width: 1.15rem;
+      height: 1.15rem;
+      margin: 0.4rem 0 0;
+      border: 1.5px solid var(--ink);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .item input:checked {
+      background: var(--tone);
+      border-color: var(--tone);
+    }
+
+    .item input:checked::after {
+      content: "";
+      width: 0.55rem;
+      height: 0.3rem;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translate(1px, -1px);
+    }
+
+    .item span { line-height: 1.6; }
+
+    .item input:checked + span {
+      color: var(--soft);
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px;
+      text-decoration-color: var(--tone);
+    }
+
+    html.js.is-ready .day { display: none; }
+    html.js.is-ready .day.is-active { display: block; }
+
+    .rail { margin-top: 2.6rem; }
+
+    .rules {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: rule;
+    }
+
+    .rules li {
+      counter-increment: rule;
+      position: relative;
+      padding: 0.65rem 0;
+      padding-inline-start: 1.8rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .rules li::before {
+      content: counter(rule);
+      position: absolute;
+      inset-inline-start: 0;
+      top: 0.65rem;
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--a);
+    }
+
+    .notes { margin-top: 2.6rem; }
+
+    .notes ul { margin: 0; padding-inline-start: 1.15rem; }
+
+    .notes li { padding: 0.35rem 0; }
+
+    .notes li::marker { color: var(--a); }
+
+    #rules { scroll-margin-top: 1rem; }
+
+    @media (min-width: 760px) {
+      .ration {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1000px) {
+      .content {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 2.5rem;
+        align-items: start;
+      }
+
+      .rail { margin-top: 0; }
+
+      .weigh { display: none; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .day.is-wiping {
+        animation: ration-wipe 520ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+
+    @keyframes ration-wipe {
+      from { clip-path: inset(0 0 0 100%); }
+      to { clip-path: inset(0 0 0 0); }
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      .top, .targets { background: #fff !important; color: #000 !important; }
+      .targets { border: 1px solid #000; }
+      .lede, .player dt, .when, .weigh, .scope { color: #000 !important; }
+      .bigcode, .meal h3, .rules li::before, .notes li::marker { color: #000 !important; }
+      .sheet { box-shadow: none; border-top: 2px solid #000; }
+      .week, .habits, .toolbar, .scope, .skip { display: none !important; }
+      .weigh { display: block !important; }
+      html.js.is-ready .day, .day { display: block !important; }
+      .day + .day { break-before: page; }
+      .meal { break-inside: avoid; }
+      .item input { display: none; }
+      .item input:checked + span,
+      .item span { color: #000 !important; text-decoration: none !important; }
+      .content, .rail { display: block; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#meals">تخطَّ إلى وجبات اليوم</a>
+
+  <header class="top">
+    <div class="wrap identity">
+      <h1>خطة التغذية الأسبوعية</h1>
+      <p class="lede">ثلاثة قوالب — A و B و C — تتناوب من السبت إلى الجمعة. الكميات أدناه هي المستهدف اليومي.</p>
+      <h2>بيانات اللاعب</h2>
+      <dl class="player">
+        <div><dt>العمر</dt><dd>24 سنة</dd></div>
+        <div><dt>الطول</dt><dd>174 سم</dd></div>
+        <div><dt>الوزن</dt><dd>78 كغم</dd></div>
+        <div><dt>نسبة الدهون</dt><dd>22.1%</dd></div>
+        <div><dt>الكتلة العضلية الهيكلية</dt><dd>34.6 كغم</dd></div>
+      </dl>
+    </div>
+    <div class="targets">
+      <div class="wrap">
+        <h2>الاحتياج اليومي المستهدف</h2>
+        <dl class="ration">
+          <div>
+            <dt>السعرات الحرارية</dt>
+            <dd><span class="num">1950–2050</span> <span>سعرة تقريباً</span></dd>
+          </div>
+          <div>
+            <dt>البروتين</dt>
+            <dd><span class="num">145–155</span> <span>غراماً</span></dd>
+          </div>
+          <div>
+            <dt>الكربوهيدرات</dt>
+            <dd><span class="num">190–220</span> <span>غراماً</span></dd>
+          </div>
+          <div>
+            <dt>الدهون</dt>
+            <dd><span class="num">55–65</span> <span>غراماً</span></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap board">
+      <h2>توزيع البرنامج على مدار الأسبوع</h2>
+      <nav class="week" aria-label="توزيع البرنامج على مدار الأسبوع">
+        <a href="#day-a" data-dow="6" data-template="a"><span class="dow">السبت</span><span class="code">A</span><span class="today-flag" hidden>اليوم</span></a>
+        <a href="#day-b" data-dow="0" data-template="b"><span class="dow">الأحد</span><span class="code">B</span><span class="today-flag" hidden>اليوم</span></a>
+        <a href="#day-c" data-dow="1" data-template="c"><span class="dow">الاثنين</span><span class="code">C</span><span class="today-flag" hidden>اليوم</span></a>
+        <a href="#day-a" data-dow="2" data-template="a"><span class="dow">الثلاثاء</span><span class="code">A</span><span class="today-flag" hidden>اليوم</span></a>
+        <a href="#day-b" data-dow="3" data-template="b"><span class="dow">الأربعاء</span><span class="code">B</span><span class="today-flag" hidden>اليوم</span></a>
+        <a href="#day-c" data-dow="4" data-template="c"><span class="dow">الخميس</span><span class="code">C</span><span class="today-flag" hidden>اليوم</span></a>
+        <a href="#day-a" data-dow="5" data-template="a"><span class="dow">الجمعة</span><span class="code">A</span><span class="today-flag" hidden>اليوم</span></a>
+      </nav>
+      <ul class="habits">
+        <li>شرب <span class="num">2.5–3</span> لترات ماء يومياً، مع مراعاة التعرق والنشاط.</li>
+        <li>النوم من 7 إلى 9 ساعات يومياً.</li>
+        <li>تمارين المقاومة <span class="num">4–5</span> أيام أسبوعياً.</li>
+        <li><a href="#rules">كل التعليمات</a></li>
+      </ul>
+    </div>
+
+    <div class="content wrap">
+      <div class="sheet" id="meals" tabindex="-1">
+        <ul class="weigh">
+          <li>أوزان اللحوم والدجاج والأرز والبرغل والبقوليات المذكورة بعد الطبخ.</li>
+          <li>أوزان الشوفان والمكسرات قبل التحضير.</li>
+        </ul>
+        <div class="toolbar" hidden>
+          <p class="progress" id="status" aria-live="polite"></p>
+          <button type="button" id="reset">مسح العلامات</button>
+          <button type="button" id="today" hidden>العودة إلى اليوم</button>
+          <button type="button" id="print">طباعة الخطة</button>
+        </div>
+        <p class="scope" id="scope" hidden>العلامات تُحفظ لكل يوم من الأسبوع على حدة، حتى عندما يتكرر القالب.</p>
+
+        <article class="day" id="day-a" data-template="a">
+          <header class="dayhead">
+            <p class="bigcode" aria-hidden="true">A</p>
+            <div>
+              <h2>اليوم الأول</h2>
+              <p class="when">السبت · الثلاثاء · الجمعة</p>
+            </div>
+          </header>
+          <section class="meal" aria-labelledby="a1">
+            <h3 id="a1">الوجبة الأولى – الفطور</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="a1-1"><span>3 بيضات مسلوقة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a1-2"><span>رغيف خبز عربي أسمر صغير (60 غراماً).</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a1-3"><span>خيار وبندورة.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal is-snack" aria-labelledby="a2">
+            <h3 id="a2">الوجبة الثانية – سناك</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="a2-1"><span>كوب حليب قليل الدسم (250 مل).</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a2-2"><span>حبة موز متوسطة.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal" aria-labelledby="a3">
+            <h3 id="a3">الوجبة الثالثة – الغداء</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="a3-1"><span>صدر دجاج مشوي 180 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a3-2"><span>أرز مطبوخ 150 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a3-3"><span>طبق سلطة كبير.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a3-4"><span>ملعقة شاي زيت زيتون.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal is-snack" aria-labelledby="a4">
+            <h3 id="a4">الوجبة الرابعة – سناك</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="a4-1"><span>زبادي 200 غرام.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a4-2"><span>حمص محمص 30 غراماً.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal" aria-labelledby="a5">
+            <h3 id="a5">الوجبة الخامسة – العشاء</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="a5-1"><span>عدس مطبوخ 250 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a5-2"><span>زبادي 200 غرام.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a5-3"><span>نصف رغيف خبز عربي صغير.</span></label></li>
+            </ul>
+          </section>
+        </article>
+
+        <article class="day" id="day-b" data-template="b">
+          <header class="dayhead">
+            <p class="bigcode" aria-hidden="true">B</p>
+            <div>
+              <h2>اليوم الثاني</h2>
+              <p class="when">الأحد · الأربعاء</p>
+            </div>
+          </header>
+          <section class="meal" aria-labelledby="b1">
+            <h3 id="b1">الوجبة الأولى – الفطور</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="b1-1"><span>شوفان 50 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b1-2"><span>حليب قليل الدسم 250 مل.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b1-3"><span>3 بيضات مسلوقة.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal is-snack" aria-labelledby="b2">
+            <h3 id="b2">الوجبة الثانية – سناك</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="b2-1"><span>حبة تفاح.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b2-2"><span>فول سوداني 25 غراماً.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal" aria-labelledby="b3">
+            <h3 id="b3">الوجبة الثالثة – الغداء</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="b3-1"><span>لحم بقري قليل الدهن 180 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b3-2"><span>بطاطا مسلوقة أو بالفرن 250 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b3-3"><span>طبق سلطة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b3-4"><span>ملعقة شاي زيت زيتون.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal is-snack" aria-labelledby="b4">
+            <h3 id="b4">الوجبة الرابعة – سناك</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="b4-1"><span>علبة تونة بالماء (120 غراماً بعد التصفية).</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b4-2"><span>حبة فاكهة.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal" aria-labelledby="b5">
+            <h3 id="b5">الوجبة الخامسة – العشاء</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="b5-1"><span>فاصولياء بيضاء مطبوخة 200 غرام.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b5-2"><span>زبادي 200 غرام.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b5-3"><span>نصف رغيف خبز عربي صغير.</span></label></li>
+            </ul>
+          </section>
+        </article>
+
+        <article class="day" id="day-c" data-template="c">
+          <header class="dayhead">
+            <p class="bigcode" aria-hidden="true">C</p>
+            <div>
+              <h2>اليوم الثالث</h2>
+              <p class="when">الاثنين · الخميس</p>
+            </div>
+          </header>
+          <section class="meal" aria-labelledby="c1">
+            <h3 id="c1">الوجبة الأولى – الفطور</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="c1-1"><span>3 بيضات.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c1-2"><span>لبنة قليلة الدسم 50 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c1-3"><span>رغيف خبز عربي صغير (60 غراماً).</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c1-4"><span>خيار وبندورة.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal is-snack" aria-labelledby="c2">
+            <h3 id="c2">الوجبة الثانية – سناك</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="c2-1"><span>حليب قليل الدسم 250 مل.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c2-2"><span>حبتا تمر.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c2-3"><span>حبة موز صغيرة.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal" aria-labelledby="c3">
+            <h3 id="c3">الوجبة الثالثة – الغداء</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="c3-1"><span>صدر دجاج مشوي 170 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c3-2"><span>برغل مطبوخ 180 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c3-3"><span>طبق سلطة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c3-4"><span>ملعقة شاي زيت زيتون.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal is-snack" aria-labelledby="c4">
+            <h3 id="c4">الوجبة الرابعة – سناك</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="c4-1"><span>زبادي 200 غرام.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c4-2"><span>فول سوداني 20 غراماً.</span></label></li>
+            </ul>
+          </section>
+          <section class="meal" aria-labelledby="c5">
+            <h3 id="c5">الوجبة الخامسة – العشاء</h3>
+            <ul>
+              <li class="item"><label><input type="checkbox" id="c5-1"><span>حمص حب مطبوخ 200 غرام.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c5-2"><span>بيضتان مسلوقتان.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c5-3"><span>نصف رغيف خبز عربي صغير.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c5-4"><span>خيار وبندورة.</span></label></li>
+            </ul>
+          </section>
+        </article>
+      </div>
+
+      <aside class="rail">
+        <section id="rules" aria-labelledby="rules-title">
+          <h2 id="rules-title">تعليمات عامة</h2>
+          <ol class="rules">
+            <li>شرب <span class="num">2.5–3</span> لترات ماء يومياً، مع مراعاة التعرق والنشاط.</li>
+            <li>الالتزام بكميات الطعام المحددة.</li>
+            <li>تجنب المشروبات الغازية المحلاة والعصائر الجاهزة.</li>
+            <li>النوم من 7 إلى 9 ساعات يومياً.</li>
+            <li>الالتزام بتمارين المقاومة <span class="num">4–5</span> أيام أسبوعياً.</li>
+            <li>عدم إلغاء الكربوهيدرات من النظام الغذائي.</li>
+            <li>الاهتمام بالتدرج في الأوزان أثناء التمرين.</li>
+          </ol>
+        </section>
+        <section class="notes" aria-labelledby="notes-title">
+          <h2 id="notes-title">ملاحظات</h2>
+          <ul>
+            <li>أوزان اللحوم والدجاج والأرز والبرغل والبقوليات المذكورة بعد الطبخ.</li>
+            <li>أوزان الشوفان والمكسرات قبل التحضير.</li>
+            <li>يمكن استبدال الدجاج بالبيض أو التونة أو مصادر بروتين اقتصادية أخرى مع المحافظة على كمية البروتين.</li>
+            <li>تتم متابعة الوزن ومحيط الخصر أسبوعياً.</li>
+            <li>يعاد تقييم البرنامج بعد <span class="num">4–6</span> أسابيع.</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var NAMES = { "6": "السبت", "0": "الأحد", "1": "الاثنين", "2": "الثلاثاء", "3": "الأربعاء", "4": "الخميس", "5": "الجمعة" };
+      var links = Array.prototype.slice.call(document.querySelectorAll(".week a"));
+      var articles = Array.prototype.slice.call(document.querySelectorAll(".day"));
+      var sheet = document.querySelector(".sheet");
+      var status = document.getElementById("status");
+      var scope = document.getElementById("scope");
+      var resetBtn = document.getElementById("reset");
+      var todayBtn = document.getElementById("today");
+      var printBtn = document.getElementById("print");
+      var KEY = "ration-plan-v1";
+      var selected = String(new Date().getDay());
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function weekKey(date) {
+        var d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        d.setDate(d.getDate() - ((d.getDay() + 1) % 7));
+        var m = String(d.getMonth() + 1).padStart(2, "0");
+        var day = String(d.getDate()).padStart(2, "0");
+        return d.getFullYear() + "-" + m + "-" + day;
+      }
+
+      function load() {
+        var current = weekKey(new Date());
+        try {
+          var data = JSON.parse(localStorage.getItem(KEY) || "null");
+          if (!data || data.week !== current || typeof data.days !== "object" || !data.days) {
+            return { week: current, days: {} };
+          }
+          return data;
+        } catch (err) {
+          return { week: current, days: {} };
+        }
+      }
+
+      var store = load();
+
+      function persist() {
+        try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (err) {}
+      }
+
+      function activeArticle() {
+        return document.querySelector(".day.is-active");
+      }
+
+      function collect() {
+        var article = activeArticle();
+        if (!article) return;
+        var ids = [];
+        article.querySelectorAll("input[type=checkbox]").forEach(function (input) {
+          if (input.checked) ids.push(input.id);
+        });
+        store.days[selected] = ids;
+        persist();
+      }
+
+      function apply() {
+        var article = activeArticle();
+        if (!article) return;
+        var set = {};
+        (store.days[selected] || []).forEach(function (id) { set[id] = true; });
+        article.querySelectorAll("input[type=checkbox]").forEach(function (input) {
+          input.checked = !!set[input.id];
+        });
+      }
+
+      function renderStatus() {
+        var article = activeArticle();
+        var name = NAMES[selected];
+        if (!article) return;
+        var boxes = article.querySelectorAll("input[type=checkbox]");
+        var done = 0;
+        boxes.forEach(function (input) { if (input.checked) done += 1; });
+        var sentence = name + " · ";
+        if (done === 0) sentence += "لا علامات بعد";
+        else if (done === boxes.length) sentence += "اكتملت أصناف اليوم";
+        else sentence += done + " من " + boxes.length + " صنفاً";
+        status.textContent = sentence;
+        resetBtn.textContent = "مسح علامات " + name;
+        todayBtn.hidden = selected === String(new Date().getDay());
+      }
+
+      function select(dow, options) {
+        options = options || {};
+        var link = null;
+        links.forEach(function (a) {
+          if (a.getAttribute("data-dow") === String(dow)) link = a;
+        });
+        if (!link) return;
+        if (activeArticle()) collect();
+        selected = String(dow);
+        var template = link.getAttribute("data-template");
+        links.forEach(function (a) {
+          var on = a === link;
+          a.classList.toggle("is-on", on);
+          a.classList.toggle("is-today", a.getAttribute("data-dow") === String(new Date().getDay()));
+          if (on) a.setAttribute("aria-current", "page");
+          else a.removeAttribute("aria-current");
+        });
+        articles.forEach(function (article) {
+          var on = article.getAttribute("data-template") === template;
+          article.classList.toggle("is-active", on);
+          article.classList.remove("is-wiping");
+          if (on && options.animate && !reduce) {
+            void article.offsetWidth;
+            article.classList.add("is-wiping");
+          }
+        });
+        sheet.style.setProperty("--tone", "var(--" + template + ")");
+        apply();
+        renderStatus();
+        if (options.focus) {
+          var heading = activeArticle().querySelector("h2");
+          heading.setAttribute("tabindex", "-1");
+          heading.focus({ preventScroll: true });
+        }
+        if (options.scroll && window.matchMedia("(max-width: 999px)").matches) {
+          sheet.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+        }
+      }
+
+      links.forEach(function (a) {
+        var flag = a.querySelector(".today-flag");
+        if (a.getAttribute("data-dow") === String(new Date().getDay()) && flag) flag.hidden = false;
+        a.addEventListener("click", function (event) {
+          event.preventDefault();
+          select(a.getAttribute("data-dow"), { animate: true, focus: true, scroll: true });
+        });
+      });
+
+      sheet.addEventListener("change", function (event) {
+        if (event.target.matches("input[type=checkbox]")) {
+          collect();
+          renderStatus();
+        }
+      });
+
+      resetBtn.addEventListener("click", function () {
+        var article = activeArticle();
+        if (!article) return;
+        article.querySelectorAll("input[type=checkbox]").forEach(function (input) {
+          input.checked = false;
+        });
+        store.days[selected] = [];
+        persist();
+        renderStatus();
+      });
+
+      todayBtn.addEventListener("click", function () {
+        select(String(new Date().getDay()), { animate: true, focus: true, scroll: true });
+      });
+
+      printBtn.addEventListener("click", function () { window.print(); });
+
+      scope.hidden = false;
+      document.querySelector(".toolbar").hidden = false;
+      document.documentElement.classList.add("is-ready");
+      select(selected, { animate: false, focus: false, scroll: false });
+    })();
+  </script>
+</body>
+</html>
