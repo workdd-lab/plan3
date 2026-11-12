@@ -156,6 +156,7 @@
     .num {
       direction: ltr;
       unicode-bidi: isolate;
+      white-space: nowrap;
     }
 
     .board { margin-top: 1.8rem; }
@@ -369,6 +370,20 @@
 
     .item span { line-height: 1.6; }
 
+    .swap-rule {
+      margin: 0 0 1rem;
+      color: var(--soft);
+      font-size: 0.95rem;
+    }
+
+    .swap {
+      margin: 0.05rem 0 0.55rem;
+      padding-inline-start: 1.9rem;
+      color: var(--soft);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
     .item input:checked + span {
       color: var(--soft);
       text-decoration: line-through;
@@ -452,7 +467,7 @@
       body { background: #fff; color: #000; }
       .top, .targets { background: #fff !important; color: #000 !important; }
       .targets { border: 1px solid #000; }
-      .lede, .player dt, .when, .weigh, .scope { color: #000 !important; }
+      .lede, .player dt, .when, .weigh, .scope, .swap, .swap-rule { color: #000 !important; }
       .bigcode, .meal h3, .rules li::before, .notes li::marker { color: #000 !important; }
       .sheet { box-shadow: none; border-top: 2px solid #000; }
       .week, .habits, .toolbar, .scope, .skip { display: none !important; }
@@ -542,6 +557,7 @@
           <button type="button" id="print">طباعة الخطة</button>
         </div>
         <p class="scope" id="scope" hidden>العلامات تُحفظ لكل يوم من الأسبوع على حدة، حتى عندما يتكرر القالب.</p>
+        <p class="swap-rule">البديل يحل محل الصنف ولا يُضاف إليه. وزنه مختار ليقارب البروتين والكربوهيدرات والدهن، والزيت المذكور معه جزء من الحصة.</p>
 
         <article class="day" id="day-a" data-template="a">
           <header class="dayhead">
@@ -554,40 +570,40 @@
           <section class="meal" aria-labelledby="a1">
             <h3 id="a1">الوجبة الأولى – الفطور</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="a1-1"><span>3 بيضات مسلوقة.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="a1-2"><span>رغيف خبز عربي أسمر صغير (60 غراماً).</span></label></li>
-              <li class="item"><label><input type="checkbox" id="a1-3"><span>خيار وبندورة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a1-1"><span>3 بيضات مسلوقة.</span></label><p class="swap">بدل: صدر دجاج مطبوخ 60 غراماً مع 12 غراماً زيت زيتون، أو تونة مصفاة 75 غراماً مع 13 غراماً زيت.</p></li>
+              <li class="item"><label><input type="checkbox" id="a1-2"><span>رغيف خبز عربي أسمر صغير (60 غراماً).</span></label><p class="swap">بدل: 100 غرام أرز مطبوخ، أو 40 غراماً شوفان جاف، أو 170 غراماً بطاطا مسلوقة.</p></li>
+              <li class="item"><label><input type="checkbox" id="a1-3"><span>خيار وبندورة.</span></label><p class="swap">بدل: الكمية نفسها من فليفلة أو خس أو كوسا أو ملفوف، بلا ذرة أو بازلاء.</p></li>
             </ul>
           </section>
           <section class="meal is-snack" aria-labelledby="a2">
             <h3 id="a2">الوجبة الثانية – سناك</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="a2-1"><span>كوب حليب قليل الدسم (250 مل).</span></label></li>
-              <li class="item"><label><input type="checkbox" id="a2-2"><span>حبة موز متوسطة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a2-1"><span>كوب حليب قليل الدسم (250 مل).</span></label><p class="swap">بدل: 250 مل لبن رائب قليل الدسم، أو 220 غراماً زبادي قليل الدسم غير محلى.</p></li>
+              <li class="item"><label><input type="checkbox" id="a2-2"><span>حبة موز متوسطة.</span></label><p class="swap">بدل: حبة تفاح متوسطة، أو حبة كمثرى متوسطة، أو 30 غراماً تمر.</p></li>
             </ul>
           </section>
           <section class="meal" aria-labelledby="a3">
             <h3 id="a3">الوجبة الثالثة – الغداء</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="a3-1"><span>صدر دجاج مشوي 180 غراماً.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="a3-2"><span>أرز مطبوخ 150 غراماً.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="a3-3"><span>طبق سلطة كبير.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="a3-4"><span>ملعقة شاي زيت زيتون.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a3-1"><span>صدر دجاج مشوي 180 غراماً.</span></label><p class="swap">بدل: صدر حبش 180 غراماً، أو تونة مصفاة 190 غراماً، أو سمك أبيض مشوي 240 غراماً.</p></li>
+              <li class="item"><label><input type="checkbox" id="a3-2"><span>أرز مطبوخ 150 غراماً.</span></label><p class="swap">بدل: 140 غراماً معكرونة مطبوخة، أو 250 غراماً بطاطا مسلوقة، أو 85 غراماً خبز عربي أسمر.</p></li>
+              <li class="item"><label><input type="checkbox" id="a3-3"><span>طبق سلطة كبير.</span></label><p class="swap">بدل: طبق خضار غير نشوية بالحجم نفسه، بدون صلصة ولا زيت إضافي.</p></li>
+              <li class="item"><label><input type="checkbox" id="a3-4"><span>ملعقة شاي زيت زيتون.</span></label><p class="swap">بدل: 5 غرامات من أي زيت، أو 8 غرامات طحينة، أو 35 غراماً أفوكادو.</p></li>
             </ul>
           </section>
           <section class="meal is-snack" aria-labelledby="a4">
             <h3 id="a4">الوجبة الرابعة – سناك</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="a4-1"><span>زبادي 200 غرام.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="a4-2"><span>حمص محمص 30 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a4-1"><span>زبادي 200 غرام.</span></label><p class="swap">بدل: 250 مل حليب أو 200 غرام لبن رائب، وكلاهما بنفس نسبة دسم الزبادي.</p></li>
+              <li class="item"><label><input type="checkbox" id="a4-2"><span>حمص محمص 30 غراماً.</span></label><p class="swap">بدل: 30 غراماً فول محمص بدون زيت زائد.</p></li>
             </ul>
           </section>
           <section class="meal" aria-labelledby="a5">
             <h3 id="a5">الوجبة الخامسة – العشاء</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="a5-1"><span>عدس مطبوخ 250 غراماً.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="a5-2"><span>زبادي 200 غرام.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="a5-3"><span>نصف رغيف خبز عربي صغير.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="a5-1"><span>عدس مطبوخ 250 غراماً.</span></label><p class="swap">بدل: 250 غراماً فاصولياء بيضاء مطبوخة، أو 250 غراماً فول مدمس مصفى.</p></li>
+              <li class="item"><label><input type="checkbox" id="a5-2"><span>زبادي 200 غرام.</span></label><p class="swap">بدل: 250 مل حليب أو 200 غرام لبن رائب، وكلاهما بنفس نسبة دسم الزبادي.</p></li>
+              <li class="item"><label><input type="checkbox" id="a5-3"><span>نصف رغيف خبز عربي صغير.</span></label><p class="swap">بدل: 50 غراماً أرز مطبوخ، أو 20 غراماً شوفان جاف، أو 85 غراماً بطاطا مسلوقة.</p></li>
             </ul>
           </section>
         </article>
@@ -603,40 +619,40 @@
           <section class="meal" aria-labelledby="b1">
             <h3 id="b1">الوجبة الأولى – الفطور</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="b1-1"><span>شوفان 50 غراماً.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="b1-2"><span>حليب قليل الدسم 250 مل.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="b1-3"><span>3 بيضات مسلوقة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b1-1"><span>شوفان 50 غراماً.</span></label><p class="swap">بدل: 75 غراماً خبز عربي أسمر. الكربوهيدرات مطابقة، والبروتين أقل بنحو 2 غرام.</p></li>
+              <li class="item"><label><input type="checkbox" id="b1-2"><span>حليب قليل الدسم 250 مل.</span></label><p class="swap">بدل: 250 مل لبن رائب قليل الدسم، أو 220 غراماً زبادي قليل الدسم غير محلى.</p></li>
+              <li class="item"><label><input type="checkbox" id="b1-3"><span>3 بيضات مسلوقة.</span></label><p class="swap">بدل: صدر دجاج مطبوخ 60 غراماً مع 12 غراماً زيت زيتون، أو تونة مصفاة 75 غراماً مع 13 غراماً زيت.</p></li>
             </ul>
           </section>
           <section class="meal is-snack" aria-labelledby="b2">
             <h3 id="b2">الوجبة الثانية – سناك</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="b2-1"><span>حبة تفاح.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="b2-2"><span>فول سوداني 25 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b2-1"><span>حبة تفاح.</span></label><p class="swap">بدل: حبة موز متوسطة، أو حبة كمثرى، أو 30 غراماً تمر.</p></li>
+              <li class="item"><label><input type="checkbox" id="b2-2"><span>فول سوداني 25 غراماً.</span></label><p class="swap">بدل: 25 غراماً زبدة فول سوداني طبيعية بلا سكر، أو 25 غراماً لوز.</p></li>
             </ul>
           </section>
           <section class="meal" aria-labelledby="b3">
             <h3 id="b3">الوجبة الثالثة – الغداء</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="b3-1"><span>لحم بقري قليل الدهن 180 غراماً.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="b3-2"><span>بطاطا مسلوقة أو بالفرن 250 غراماً.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="b3-3"><span>طبق سلطة.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="b3-4"><span>ملعقة شاي زيت زيتون.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b3-1"><span>لحم بقري قليل الدهن 180 غراماً.</span></label><p class="swap">بدل: صدر دجاج مطبوخ 160 غراماً مع 8 غرامات زيت، أو تونة مصفاة 170 غراماً مع 12 غراماً زيت.</p></li>
+              <li class="item"><label><input type="checkbox" id="b3-2"><span>بطاطا مسلوقة أو بالفرن 250 غراماً.</span></label><p class="swap">بدل: 150 غراماً أرز مطبوخ، أو 140 غراماً معكرونة مطبوخة، أو 85 غراماً خبز أسمر.</p></li>
+              <li class="item"><label><input type="checkbox" id="b3-3"><span>طبق سلطة.</span></label><p class="swap">بدل: طبق خضار غير نشوية بالحجم نفسه، بدون صلصة ولا زيت إضافي.</p></li>
+              <li class="item"><label><input type="checkbox" id="b3-4"><span>ملعقة شاي زيت زيتون.</span></label><p class="swap">بدل: 5 غرامات من أي زيت، أو 8 غرامات طحينة، أو 35 غراماً أفوكادو.</p></li>
             </ul>
           </section>
           <section class="meal is-snack" aria-labelledby="b4">
             <h3 id="b4">الوجبة الرابعة – سناك</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="b4-1"><span>علبة تونة بالماء (120 غراماً بعد التصفية).</span></label></li>
-              <li class="item"><label><input type="checkbox" id="b4-2"><span>حبة فاكهة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b4-1"><span>علبة تونة بالماء (120 غراماً بعد التصفية).</span></label><p class="swap">بدل: صدر دجاج مطبوخ 110 غرامات، أو سمك أبيض 150 غراماً.</p></li>
+              <li class="item"><label><input type="checkbox" id="b4-2"><span>حبة فاكهة.</span></label><p class="swap">بدل: حبة تفاح أو موزة متوسطة أو 30 غراماً تمر. التوت يحتاج 250 غراماً ليماثل الحبة.</p></li>
             </ul>
           </section>
           <section class="meal" aria-labelledby="b5">
             <h3 id="b5">الوجبة الخامسة – العشاء</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="b5-1"><span>فاصولياء بيضاء مطبوخة 200 غرام.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="b5-2"><span>زبادي 200 غرام.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="b5-3"><span>نصف رغيف خبز عربي صغير.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="b5-1"><span>فاصولياء بيضاء مطبوخة 200 غرام.</span></label><p class="swap">بدل: 200 غرام عدس مطبوخ، أو 200 غرام فول مدمس مصفى.</p></li>
+              <li class="item"><label><input type="checkbox" id="b5-2"><span>زبادي 200 غرام.</span></label><p class="swap">بدل: 250 مل حليب أو 200 غرام لبن رائب، وكلاهما بنفس نسبة دسم الزبادي.</p></li>
+              <li class="item"><label><input type="checkbox" id="b5-3"><span>نصف رغيف خبز عربي صغير.</span></label><p class="swap">بدل: 50 غراماً أرز مطبوخ، أو 20 غراماً شوفان جاف، أو 85 غراماً بطاطا مسلوقة.</p></li>
             </ul>
           </section>
         </article>
@@ -652,43 +668,43 @@
           <section class="meal" aria-labelledby="c1">
             <h3 id="c1">الوجبة الأولى – الفطور</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="c1-1"><span>3 بيضات.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c1-2"><span>لبنة قليلة الدسم 50 غراماً.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c1-3"><span>رغيف خبز عربي صغير (60 غراماً).</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c1-4"><span>خيار وبندورة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c1-1"><span>3 بيضات.</span></label><p class="swap">بدل: صدر دجاج مطبوخ 60 غراماً مع 12 غراماً زيت زيتون، أو تونة مصفاة 75 غراماً مع 13 غراماً زيت. إذا بقي البيض فاطهه بلا زيت.</p></li>
+              <li class="item"><label><input type="checkbox" id="c1-2"><span>لبنة قليلة الدسم 50 غراماً.</span></label><p class="swap">بدل: 120 غراماً زبادي قليل الدسم، أو 60 غراماً جبنة قريش قليلة الدسم.</p></li>
+              <li class="item"><label><input type="checkbox" id="c1-3"><span>رغيف خبز عربي صغير (60 غراماً).</span></label><p class="swap">بدل: 100 غرام أرز مطبوخ، أو 40 غراماً شوفان جاف، أو 170 غراماً بطاطا مسلوقة.</p></li>
+              <li class="item"><label><input type="checkbox" id="c1-4"><span>خيار وبندورة.</span></label><p class="swap">بدل: الكمية نفسها من فليفلة أو خس أو كوسا أو ملفوف، بلا ذرة أو بازلاء.</p></li>
             </ul>
           </section>
           <section class="meal is-snack" aria-labelledby="c2">
             <h3 id="c2">الوجبة الثانية – سناك</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="c2-1"><span>حليب قليل الدسم 250 مل.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c2-2"><span>حبتا تمر.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c2-3"><span>حبة موز صغيرة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c2-1"><span>حليب قليل الدسم 250 مل.</span></label><p class="swap">بدل: 250 مل لبن رائب قليل الدسم، أو 220 غراماً زبادي قليل الدسم غير محلى.</p></li>
+              <li class="item"><label><input type="checkbox" id="c2-2"><span>حبتا تمر.</span></label><p class="swap">بدل: 15 غراماً زبيب، أو نصف حبة تفاح.</p></li>
+              <li class="item"><label><input type="checkbox" id="c2-3"><span>حبة موز صغيرة.</span></label><p class="swap">بدل: حبة تفاح صغيرة، أو حبة كمثرى صغيرة.</p></li>
             </ul>
           </section>
           <section class="meal" aria-labelledby="c3">
             <h3 id="c3">الوجبة الثالثة – الغداء</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="c3-1"><span>صدر دجاج مشوي 170 غراماً.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c3-2"><span>برغل مطبوخ 180 غراماً.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c3-3"><span>طبق سلطة.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c3-4"><span>ملعقة شاي زيت زيتون.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c3-1"><span>صدر دجاج مشوي 170 غراماً.</span></label><p class="swap">بدل: صدر حبش 170 غراماً، أو تونة مصفاة 180 غراماً، أو سمك أبيض مشوي 225 غراماً.</p></li>
+              <li class="item"><label><input type="checkbox" id="c3-2"><span>برغل مطبوخ 180 غراماً.</span></label><p class="swap">بدل: 120 غراماً أرز مطبوخ، أو 110 غرامات معكرونة مطبوخة، أو 190 غراماً بطاطا مسلوقة.</p></li>
+              <li class="item"><label><input type="checkbox" id="c3-3"><span>طبق سلطة.</span></label><p class="swap">بدل: طبق خضار غير نشوية بالحجم نفسه، بدون صلصة ولا زيت إضافي.</p></li>
+              <li class="item"><label><input type="checkbox" id="c3-4"><span>ملعقة شاي زيت زيتون.</span></label><p class="swap">بدل: 5 غرامات من أي زيت، أو 8 غرامات طحينة، أو 35 غراماً أفوكادو.</p></li>
             </ul>
           </section>
           <section class="meal is-snack" aria-labelledby="c4">
             <h3 id="c4">الوجبة الرابعة – سناك</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="c4-1"><span>زبادي 200 غرام.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c4-2"><span>فول سوداني 20 غراماً.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c4-1"><span>زبادي 200 غرام.</span></label><p class="swap">بدل: 250 مل حليب أو 200 غرام لبن رائب، وكلاهما بنفس نسبة دسم الزبادي.</p></li>
+              <li class="item"><label><input type="checkbox" id="c4-2"><span>فول سوداني 20 غراماً.</span></label><p class="swap">بدل: 20 غراماً زبدة فول سوداني طبيعية بلا سكر، أو 20 غراماً لوز.</p></li>
             </ul>
           </section>
           <section class="meal" aria-labelledby="c5">
             <h3 id="c5">الوجبة الخامسة – العشاء</h3>
             <ul>
-              <li class="item"><label><input type="checkbox" id="c5-1"><span>حمص حب مطبوخ 200 غرام.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c5-2"><span>بيضتان مسلوقتان.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c5-3"><span>نصف رغيف خبز عربي صغير.</span></label></li>
-              <li class="item"><label><input type="checkbox" id="c5-4"><span>خيار وبندورة.</span></label></li>
+              <li class="item"><label><input type="checkbox" id="c5-1"><span>حمص حب مطبوخ 200 غرام.</span></label><p class="swap">بدل: 230 غراماً فاصولياء بيضاء مطبوخة مع 4 غرامات زيت، أو 230 غراماً عدس مطبوخ مع 4 غرامات زيت.</p></li>
+              <li class="item"><label><input type="checkbox" id="c5-2"><span>بيضتان مسلوقتان.</span></label><p class="swap">بدل: صدر دجاج مطبوخ 40 غراماً مع 8 غرامات زيت، أو تونة مصفاة 50 غراماً مع 9 غرامات زيت.</p></li>
+              <li class="item"><label><input type="checkbox" id="c5-3"><span>نصف رغيف خبز عربي صغير.</span></label><p class="swap">بدل: 50 غراماً أرز مطبوخ، أو 20 غراماً شوفان جاف، أو 85 غراماً بطاطا مسلوقة.</p></li>
+              <li class="item"><label><input type="checkbox" id="c5-4"><span>خيار وبندورة.</span></label><p class="swap">بدل: الكمية نفسها من فليفلة أو خس أو كوسا أو ملفوف، بلا ذرة أو بازلاء.</p></li>
             </ul>
           </section>
         </article>
